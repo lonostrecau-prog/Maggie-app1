@@ -7,13 +7,13 @@ let recognitionActive = false;
 const maggieImg = document.getElementById("maggie");
 const wordDisplay = document.getElementById("word-display");
 
-// Load words
+// 1️⃣ Cargar palabras desde words.json
 fetch('words.json')
   .then(res => res.json())
   .then(data => { words = data; })
   .catch(err => alert("Error loading words"));
 
-// Floating messages
+// 2️⃣ Mensajes flotantes en pantalla
 function showMessage(msg, color="green") {
     let message = document.createElement("div");
     message.textContent = msg;
@@ -31,7 +31,7 @@ function showMessage(msg, color="green") {
     setTimeout(() => { document.body.removeChild(message); }, 1500);
 }
 
-// Activate microphone
+// 3️⃣ Activar reconocimiento de voz
 function startRecognition() {
     if(recognitionActive) return;
     recognitionActive = true;
@@ -57,7 +57,7 @@ function startRecognition() {
     };
 }
 
-// Next word
+// 4️⃣ Pasar a la siguiente palabra
 function nextWord() {
     wordIndex++;
     if(wordIndex >= words.length) {
@@ -68,33 +68,37 @@ function nextWord() {
     speakWord();
 }
 
-// Speak word
+// 5️⃣ Pronunciar la palabra
 function speakWord() {
     if(!currentWord || isSpeaking) return;
     isSpeaking = true;
-
     wordDisplay.textContent = currentWord.word;
     maggieImg.src = "images/mouth-open.png";
 
-    let voices = speechSynthesis.getVoices();
-    if(!voices.length){
-        setTimeout(speakWord, 200);
-        return;
+    function doSpeak() {
+        let voices = speechSynthesis.getVoices();
+        if(!voices.length){
+            // Si las voces aún no cargaron, espera
+            setTimeout(doSpeak, 200);
+            return;
+        }
+
+        let utter = new SpeechSynthesisUtterance(currentWord.word);
+        utter.voice = voices.find(v => v.lang.includes("en")) || null;
+
+        utter.onend = () => {
+            maggieImg.src = "images/maggie.png";
+            isSpeaking = false;
+        };
+
+        speechSynthesis.cancel(); // cancelar otras voces pendientes
+        speechSynthesis.speak(utter);
     }
 
-    let utter = new SpeechSynthesisUtterance(currentWord.word);
-    utter.voice = voices.find(v => v.lang.includes("en")) || null;
-
-    utter.onend = () => {
-        maggieImg.src = "images/maggie.png";
-        isSpeaking = false;
-    };
-
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utter);
+    doSpeak();
 }
 
-// Button Start
+// 6️⃣ Botón Start
 document.getElementById("start").onclick = () => {
     if(!words || words.length === 0){ alert("No words loaded"); return; }
     wordIndex = 0;
@@ -102,12 +106,12 @@ document.getElementById("start").onclick = () => {
     speakWord();
 };
 
-// Button Speak
+// 7️⃣ Botón Speak
 document.getElementById("speak").onclick = () => {
     startRecognition();
 };
 
-// Final screen
+// 8️⃣ Pantalla final
 function showFinalScreen() {
     document.body.innerHTML = `
         <div style="text-align:center; margin-top:10%;">
