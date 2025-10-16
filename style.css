@@ -1,8 +1,7 @@
-/* General styles */
 body { 
     text-align: center; 
     font-family: Comic Sans MS, cursive; 
-    background: #ffffff; /* white background */
+    background: #ffffff; /* fondo blanco */
     margin: 0; 
     padding: 0;
 }
@@ -12,7 +11,6 @@ h1 {
     margin-top: 20px;
 }
 
-/* Maggie image */
 #maggie { 
     width: 80vw; 
     max-width: 400px; 
@@ -20,14 +18,20 @@ h1 {
     display: block; 
 }
 
-/* Word display */
 #word-display { 
     font-size: 2em; 
     color: blue; 
     margin: 10px; 
 }
 
-/* Buttons */
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
 button { 
     font-size: 2em; 
     margin: 10px; 
@@ -40,13 +44,16 @@ button {
     display: inline-block;
 }
 
-/* Responsive buttons for mobile */
+/* Responsive mobile */
 @media (max-width: 600px) {
-    #start, #speak {
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    button {
         width: 80vw;
         font-size: 2em;
         padding: 15px;
-        display: block;
-        margin: 10px auto;
     }
 }
+
