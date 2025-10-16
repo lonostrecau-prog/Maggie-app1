@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Comic Sans MS', cursive;
+    background: #ffffff;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #FF69B4;
+    font-size: 2.5em;
+    margin: 10px;
+}
+
+#maggie {
+    width: 60%;
+    max-width: 400px;
+    height: auto;
+    margin: 10px 0;
+}
+
+#word-display {
+    font-size: 2.5em;
+    color: #1E90FF;
+    margin: 10px;
+}
+
+button {
+    font-size: 2em;
+    padding: 15px 30px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 15px;
+    background: #FFB6C1;
+    color: white;
+    border: none;
+    transition: transform 0.2s, background 0.2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #FF69B4;
+}
