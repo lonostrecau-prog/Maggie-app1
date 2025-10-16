@@ -7,13 +7,13 @@ let recognitionActive = false;
 const maggieImg = document.getElementById("maggie");
 const wordDisplay = document.getElementById("word-display");
 
-// Cargar palabras
+// Load words
 fetch('words.json')
   .then(res => res.json())
   .then(data => { words = data; })
-  .catch(err => alert("Error cargando palabras"));
+  .catch(err => alert("Error loading words"));
 
-// Mensajes flotantes
+// Floating messages
 function showMessage(msg, color="green") {
     let message = document.createElement("div");
     message.textContent = msg;
@@ -31,7 +31,7 @@ function showMessage(msg, color="green") {
     setTimeout(() => { document.body.removeChild(message); }, 1500);
 }
 
-// Activar micrófono
+// Activate microphone
 function startRecognition() {
     if(recognitionActive) return;
     recognitionActive = true;
@@ -44,28 +44,20 @@ function startRecognition() {
         recognitionActive = false;
         let spoken = event.results[0][0].transcript.toLowerCase();
         if(spoken.includes(currentWord.word.toLowerCase())) {
-            showMessage("¡Bien hecho! 🌟", "green");
+            showMessage("Well done! 🌟", "green");
             nextWord();
         } else {
-            showMessage("Intenta otra vez 😅", "red");
-            repeatWord();
+            showMessage("Try again 😅", "red");
         }
     };
 
     recognition.onerror = () => {
         recognitionActive = false;
-        showMessage("No te he escuchado 😕", "orange");
-        repeatWord();
+        showMessage("I didn't hear you 😕", "orange");
     };
 }
 
-// Repetir palabra
-function repeatWord() {
-    if(!currentWord) return;
-    if(!isSpeaking) speakWord();
-}
-
-// Siguiente palabra
+// Next word
 function nextWord() {
     wordIndex++;
     if(wordIndex >= words.length) {
@@ -76,7 +68,7 @@ function nextWord() {
     speakWord();
 }
 
-// Decir la palabra
+// Speak word
 function speakWord() {
     if(!currentWord || isSpeaking) return;
     isSpeaking = true;
@@ -84,7 +76,6 @@ function speakWord() {
     wordDisplay.textContent = currentWord.word;
     maggieImg.src = "images/mouth-open.png";
 
-    // Asegurarse de que haya voces cargadas
     let voices = speechSynthesis.getVoices();
     if(!voices.length){
         setTimeout(speakWord, 200);
@@ -97,26 +88,30 @@ function speakWord() {
     utter.onend = () => {
         maggieImg.src = "images/maggie.png";
         isSpeaking = false;
-        setTimeout(() => { startRecognition(); }, 500);
     };
 
     speechSynthesis.cancel();
     speechSynthesis.speak(utter);
 }
 
-// Botón Start
+// Button Start
 document.getElementById("start").onclick = () => {
-    if(!words || words.length === 0){ alert("No hay palabras cargadas"); return; }
+    if(!words || words.length === 0){ alert("No words loaded"); return; }
     wordIndex = 0;
     currentWord = words[wordIndex];
     speakWord();
 };
 
-// Pantalla final
+// Button Speak
+document.getElementById("speak").onclick = () => {
+    startRecognition();
+};
+
+// Final screen
 function showFinalScreen() {
     document.body.innerHTML = `
         <div style="text-align:center; margin-top:10%;">
-            <h1 style="font-size:3em; color: #FF69B4;">🎉 ¡Nivel completado! 🎉</h1>
+            <h1 style="font-size:3em; color: #FF69B4;">🎉 Level completed! 🎉</h1>
             <img src="images/maggie.png" style="width:300px;">
         </div>
     `;
