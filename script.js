@@ -7,13 +7,13 @@ let recognitionActive = false;
 const maggieImg = document.getElementById("maggie");
 const wordDisplay = document.getElementById("word-display");
 
-// 1️⃣ Cargar palabras
+// Cargar palabras
 fetch('words.json')
   .then(res => res.json())
   .then(data => { words = data; })
   .catch(err => alert("Error loading words"));
 
-// 2️⃣ Mensajes flotantes
+// Mensajes flotantes
 function showMessage(msg, color="green") {
     let message = document.createElement("div");
     message.textContent = msg;
@@ -31,7 +31,7 @@ function showMessage(msg, color="green") {
     setTimeout(() => { document.body.removeChild(message); }, 1500);
 }
 
-// 3️⃣ Reconocimiento de voz
+// Reconocimiento de voz
 function startRecognition() {
     if(recognitionActive) return;
     recognitionActive = true;
@@ -45,7 +45,7 @@ function startRecognition() {
         let spoken = event.results[0][0].transcript.toLowerCase();
         if(spoken.includes(currentWord.word.toLowerCase())) {
             showMessage("Well done! 🌟", "green");
-            nextWord();
+            setTimeout(nextWord, 1600); // siguiente palabra automáticamente
         } else {
             showMessage("Try again 😅", "red");
         }
@@ -57,7 +57,7 @@ function startRecognition() {
     };
 }
 
-// 4️⃣ Siguiente palabra
+// Siguiente palabra
 function nextWord() {
     wordIndex++;
     if(wordIndex >= words.length) {
@@ -68,7 +68,7 @@ function nextWord() {
     speakWord();
 }
 
-// 5️⃣ Pronunciar palabra
+// Pronunciar palabra
 function speakWord() {
     if(!currentWord || isSpeaking) return;
     isSpeaking = true;
@@ -97,7 +97,7 @@ function speakWord() {
     doSpeak();
 }
 
-// 6️⃣ Botón Start
+// Botón Start
 document.getElementById("start").onclick = () => {
     if(!words || words.length === 0){ alert("No words loaded"); return; }
     wordIndex = 0;
@@ -105,12 +105,12 @@ document.getElementById("start").onclick = () => {
     speakWord();
 };
 
-// 7️⃣ Botón Speak
+// Botón Speak
 document.getElementById("speak").onclick = () => {
     startRecognition();
 };
 
-// 8️⃣ Pantalla final
+// Pantalla final
 function showFinalScreen() {
     document.body.innerHTML = `
         <div style="text-align:center; margin-top:10%;">
