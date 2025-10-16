@@ -45,9 +45,13 @@ function startRecognition() {
         let spoken = event.results[0][0].transcript.toLowerCase();
         if(spoken.includes(currentWord.word.toLowerCase())) {
             showMessage("Well done! 🌟", "green");
-            setTimeout(nextWord, 1600); // siguiente palabra automáticamente
+            setTimeout(nextWord, 1600); // pasa a la siguiente palabra automáticamente
         } else {
             showMessage("Try again 😅", "red");
+            // vuelve a pronunciar la palabra después de fallar
+            setTimeout(() => {
+                speakWord();
+            }, 1700);
         }
     };
 
