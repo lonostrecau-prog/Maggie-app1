@@ -7,13 +7,13 @@ let recognitionActive = false;
 const maggieImg = document.getElementById("maggie");
 const wordDisplay = document.getElementById("word-display");
 
-// 1️⃣ Cargar palabras desde words.json
+// 1️⃣ Cargar palabras
 fetch('words.json')
   .then(res => res.json())
   .then(data => { words = data; })
   .catch(err => alert("Error loading words"));
 
-// 2️⃣ Mensajes flotantes en pantalla
+// 2️⃣ Mensajes flotantes
 function showMessage(msg, color="green") {
     let message = document.createElement("div");
     message.textContent = msg;
@@ -31,7 +31,7 @@ function showMessage(msg, color="green") {
     setTimeout(() => { document.body.removeChild(message); }, 1500);
 }
 
-// 3️⃣ Activar reconocimiento de voz
+// 3️⃣ Reconocimiento de voz
 function startRecognition() {
     if(recognitionActive) return;
     recognitionActive = true;
@@ -57,7 +57,7 @@ function startRecognition() {
     };
 }
 
-// 4️⃣ Pasar a la siguiente palabra
+// 4️⃣ Siguiente palabra
 function nextWord() {
     wordIndex++;
     if(wordIndex >= words.length) {
@@ -68,7 +68,7 @@ function nextWord() {
     speakWord();
 }
 
-// 5️⃣ Pronunciar la palabra
+// 5️⃣ Pronunciar palabra
 function speakWord() {
     if(!currentWord || isSpeaking) return;
     isSpeaking = true;
@@ -78,7 +78,6 @@ function speakWord() {
     function doSpeak() {
         let voices = speechSynthesis.getVoices();
         if(!voices.length){
-            // Si las voces aún no cargaron, espera
             setTimeout(doSpeak, 200);
             return;
         }
@@ -91,7 +90,7 @@ function speakWord() {
             isSpeaking = false;
         };
 
-        speechSynthesis.cancel(); // cancelar otras voces pendientes
+        speechSynthesis.cancel();
         speechSynthesis.speak(utter);
     }
 
