@@ -1,38 +1,33 @@
-body {
-    margin: 0;
+/* General styles */
+body { 
+    text-align: center; 
+    font-family: Comic Sans MS, cursive; 
+    background: #ffffff; /* white background */
+    margin: 0; 
     padding: 0;
-    text-align: center;
-    font-family: 'Comic Sans MS', cursive;
-    background: #ffffff;
 }
 
-#app {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+h1 { 
+    color: #FF69B4; 
+    margin-top: 20px;
 }
 
-h1 {
-    color: #FF69B4;
-    font-size: 2.5em;
-    margin: 10px;
+/* Maggie image */
+#maggie { 
+    width: 80vw; 
+    max-width: 400px; 
+    margin: 20px auto; 
+    display: block; 
 }
 
-#maggie {
-    width: 60%;
-    max-width: 400px;
-    height: auto;
-    margin: 10px 0;
+/* Word display */
+#word-display { 
+    font-size: 2em; 
+    color: blue; 
+    margin: 10px; 
 }
 
-#word-display {
-    font-size: 2.5em;
-    color: #1E90FF;
-    margin: 10px;
-}
-
+/* Buttons */
 button { 
     font-size: 2em; 
     margin: 10px; 
@@ -41,17 +36,17 @@ button {
     border-radius: 15px; 
     background: #FF69B4; 
     color: white; 
-    border: none;
-}
-#maggie { 
-    width: 80vw; 
-    max-width: 400px; 
-    margin: 20px auto; 
-    display: block;
+    border: none; 
+    display: inline-block;
 }
 
-button:hover {
-    transform: scale(1.1);
-    background: #FF69B4;
+/* Responsive buttons for mobile */
+@media (max-width: 600px) {
+    #start, #speak {
+        width: 80vw;
+        font-size: 2em;
+        padding: 15px;
+        display: block;
+        margin: 10px auto;
+    }
 }
-
