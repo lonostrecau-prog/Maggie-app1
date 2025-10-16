@@ -1,12 +1,60 @@
-button {
-    font-size: 2em;
-    padding: 20px;
-    margin: 10px auto;
-    border-radius: 15px;
-    background: #FF69B4;
-    color: white;
-    border: none;
-    width: 80vw;      /* ocupa ancho relativo a la pantalla */
+body { 
+    text-align: center; 
+    font-family: Comic Sans MS, cursive; 
+    background: #ffffff; /* fondo blanco */
+    margin: 0; 
+    padding: 0;
+}
+
+h1 { 
+    color: #FF69B4; 
+    margin-top: 20px;
+    font-size: 2.5em;
+}
+
+#maggie { 
+    width: 60vw;           /* tamaño razonable para PC y móvil */
     max-width: 400px;
-    display: block;    /* centrado */
+    min-width: 200px;
+    margin: 20px auto;
+    display: block;
+}
+
+#word-display { 
+    font-size: 2em; 
+    color: blue; 
+    margin: 15px 0; 
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+button { 
+    font-size: 1.8em; 
+    padding: 15px 25px; 
+    border-radius: 15px; 
+    background: #FF69B4; 
+    color: white; 
+    border: none; 
+    width: 35vw; 
+    max-width: 200px;
+    cursor: pointer;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    #maggie { width: 80vw; }
+    #word-display { font-size: 1.8em; }
+    button { width: 70vw; font-size: 1.5em; }
 }
